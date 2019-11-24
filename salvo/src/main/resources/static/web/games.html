@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Salvo!Games</title>
+    <link rel="stylesheet" type="text/css" href="css/games.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+    <header class="bg-info text-light text-center py-5">
+        <h1>Salvo Games</h1>
+    </header>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <!--LOGIN CARD-->
+                <div class="card">
+                    <h5 class="card-header">Log in</h5>
+                    <div class="card-body">
+                        <div class="card-text">
+                            <label>Email: <input type="text" class="form-control mb-2 mr-sm-2" id="username" ></label>
+                            <label>Password: <input type="password" class="form-control" id="password"></label>
+                        </div>
+
+                        <div>
+                            <button class="btn btn-info mb-2" id="login-btn" name="login-btn">Log In</button>
+                            <button class="btn btn-warning mb-2" id="signup-btn" name="signup-btn">Sign Up</button>
+                            <button class="btn btn-danger mb-2" id="logout-btn" name="logout-btn">Log Out</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <!--LEADERBOARD TABLE-->
+                <div class="card">
+                    <h5 class="card-header">Leaderboard</h5>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">User</th>
+                                <th scope="col">Won</th>
+                                <th scope="col">Losses</th>
+                                <th scope="col">Ties</th>
+                                <th scope="col">Score</th>
+                            </tr>
+                            </thead>
+                            <tbody id="leaderboard">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--GAME LIST TABLE-->
+    <div class="container">
+        <div class="card w-100">
+
+            <div class="card-header">
+               <h5>Game List</h5>
+                <button class="inline btn btn-warning mb-2" id="create-btn" name="create" disabled>Create Game</button>
+
+            </div>
+
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                       <tr>
+                          <th scope="col">Game</th>
+                          <th scope="col">Date</th>
+                          <th scope="col">Players</th>
+                       </tr>
+                    </thead>
+                    <tbody id="game-list">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!--<section>
+        <div id="app" class="p-4">
+            <ul class="games-list">
+                <li v-for="game in games" class="pt-2">Game no. {{game.id}} created on {{game.created}}
+                    <p>Players:</p>
+                    <ul>
+                        <li v-for="i in game.gamePlayers">{{i.player.email}}</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </section>-->
+
+
+    <script src="../web/js/jquery-3.3.1.min.js"></script>
+    <script src="../web/js/games.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <!--BOOTSTRAP SCRIPTS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+
+</html>
