@@ -75,10 +75,21 @@ public class SalvoController {
     return dto;
   }
 
-  /*@RequestMapping(path = "/games", method = RequestMethod.POST)
-  public ResponseEntity<String> createGame(Authentication authentication){
+  @RequestMapping(path = "/games", method = RequestMethod.POST)
+  public ResponseEntity<Map<String, Object>> createGame(Authentication authentication){
+    if(isGuest(authentication)){
+      return new ResponseEntity<>(makeMap("error", "cannot create game being a guest" ),HttpStatus.FORBIDDEN);
+    }else{
 
-  }*/
+        Player player = playerRepository.findByUserName(authentication.getName());
+        Date date = new Date();
+        Game game = gameRepository.save(new Game (date));
+        GamePlayer gp = new GamePlayer(date, game, player);
+        gamePlayerRepository.save(gp);
+
+      return new ResponseEntity<>(makeMap("game", gp.makeGamePlayerDTO()), HttpStatus.CREATED);
+    }
+  }
 
   private boolean isGuest(Authentication authentication) {
     return authentication == null || authentication instanceof AnonymousAuthenticationToken;

@@ -77,14 +77,13 @@ public class GamePlayer {
     }
 
 
-
     //DTO
 
     public Map<String, Object> makeGamePlayerDTO() {
         Map<String, Object> dto = new LinkedHashMap<>();
         dto.put("gpid",this.getId());
         dto.put("player", this.getPlayer().makePlayerDTO());
-        dto.put("score", this.getPlayer().getScoreByGame(this.getGame()).getScore());
+        //dto.put("score", this.getPlayer().getScoreByGame(this.getGame()).getScore());
         return dto;
     }
 

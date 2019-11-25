@@ -1,3 +1,19 @@
 .container{
     display: flex;
 }
+
+#login-card{
+    display: initial;
+}
+
+#signup-btn, #logout-btn{
+    display:none
+}
+
+#missing{
+    color: red
+}
+
+#create-btn{
+    display: inline;
+}

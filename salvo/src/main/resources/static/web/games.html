@@ -9,18 +9,27 @@
 </head>
 
 <body>
-    <header class="bg-info text-light text-center py-5">
-        <h1>Salvo Games</h1>
+    <header >
+        <div class="bg-info text-light text-center py-5">
+            <h1>Salvo Games</h1>
+        </div>
+
+        <nav class="navbar navbar-dark bg-dark">
+            <h2 class="navbar-text" id="account">User: Guest</h2>
+            <button class="btn btn-outline-danger mb-2" id="logout-btn" name="logout-btn">Log Out</button>
+        </nav>
+
     </header>
 
     <div class="container">
         <div class="row">
-            <div class="col">
+            <div class="col" id="login-card">
                 <!--LOGIN CARD-->
-                <div class="card">
+                <div class="card" >
                     <h5 class="card-header">Log in</h5>
                     <div class="card-body">
                         <div class="card-text">
+                            <div id="missing"></div>
                             <label>Email: <input type="text" class="form-control mb-2 mr-sm-2" id="username" ></label>
                             <label>Password: <input type="password" class="form-control" id="password"></label>
                         </div>
@@ -28,12 +37,12 @@
                         <div>
                             <button class="btn btn-info mb-2" id="login-btn" name="login-btn">Log In</button>
                             <button class="btn btn-warning mb-2" id="signup-btn" name="signup-btn">Sign Up</button>
-                            <button class="btn btn-danger mb-2" id="logout-btn" name="logout-btn">Log Out</button>
                         </div>
 
                     </div>
                 </div>
             </div>
+
             <div class="col">
                 <!--LEADERBOARD TABLE-->
                 <div class="card">
@@ -62,11 +71,9 @@
     <!--GAME LIST TABLE-->
     <div class="container">
         <div class="card w-100">
-
             <div class="card-header">
-               <h5>Game List</h5>
-                <button class="inline btn btn-warning mb-2" id="create-btn" name="create" disabled>Create Game</button>
-
+                <h5>Game List</h5>
+                <button class="inline btn btn-warning mb-2" id="create-btn" disabled>Create Game</button>
             </div>
 
             <div class="card-body">

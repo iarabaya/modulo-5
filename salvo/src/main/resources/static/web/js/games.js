@@ -9,17 +9,25 @@ $(document).ready(function() {
 
     $('#login-btn').on('click', function() {
 
-        var user = $('#username').val();
-        var pwd = $('#password').val();
+        if($('#username').val() || $('#password').val()){
+            var user = $('#username').val();
+            var pwd = $('#password').val();
 
-        $.post("/api/login", { username: user, password: pwd })
+            $.post("/api/login", { username: user, password: pwd })
             .done(function() {
                 alert('Logged in successfully!');
-
+                $('#login-card').hide(1000);
+                $('#logout-btn').show(1000);
+                $('#account').text("User: " + user);
 
             }).fail(function() {
                 alert('Failed at log');
             });
+
+        }else{
+            $('#missing').text("Missing data: write your email or password (if you don't have an account you can Sign UP)");
+            $("#signup-btn").show()
+        }
     });
 
     $('#signup-btn').on('click', function(){
@@ -29,6 +37,7 @@ $(document).ready(function() {
         $.post("/api/players", { username: user, password: pwd })
         .done(function(){
             alert('Account created')
+            $('#missing').text('Now log in!')
         }).fail(function(){
             alert('Failed at sign up')
         });
@@ -38,6 +47,10 @@ $(document).ready(function() {
         $.post("/api/logout")
         .done(function(){
         alert('Logged out successfully!')
+        $('#login-card').show(1000);
+        $('#logout-btn').hide();
+        $('#account').text('User: guest')
+
         }).fail(function(){
         alert('Failed at log out')
         });
@@ -45,10 +58,6 @@ $(document).ready(function() {
 
 });
 
-/*function userData(){
-    var user = { "name":$('#username').val(), "pwd":$('#password').val()}
-    return user;
-}*/
 
 function loadAccount(){
 
