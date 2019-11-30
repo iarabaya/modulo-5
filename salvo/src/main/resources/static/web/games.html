@@ -21,9 +21,9 @@
 
     </header>
 
-    <div class="container">
+    <div id="app" class="container" >
         <div class="row">
-            <div class="col" id="login-card">
+            <div id="login-card">
                 <!--LOGIN CARD-->
                 <div class="card" >
                     <h5 class="card-header">Log in</h5>
@@ -42,9 +42,11 @@
                     </div>
                 </div>
             </div>
+        </div>
 
+        <div class="row">
+            <!--LEADERBOARD TABLE-->
             <div class="col">
-                <!--LEADERBOARD TABLE-->
                 <div class="card">
                     <h5 class="card-header">Leaderboard</h5>
                     <div class="card-body">
@@ -58,7 +60,48 @@
                                 <th scope="col">Score</th>
                             </tr>
                             </thead>
-                            <tbody id="leaderboard">
+                            <tbody>
+                                <tr v-for="i in leaderboard">
+                                    <th>{{i.user}}</th>
+                                    <td>{{i.wins}}</td>
+                                    <td>{{i.loses}}</td>
+                                    <td>{{i.ties}}</td>
+                                    <td>{{i.total}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!--GAME LIST TABLE-->
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Game List</h5>
+                        <button class="inline btn btn-warning mb-2" id="create-btn" disabled>Create Game</button>
+                    </div>
+
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Game</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Players</th>
+                                <th scope="col">Status</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="game in games">
+                                    <th>{{game.id}}</th>
+                                    <td>{{game.created}}</td>
+                                    <td>
+                                        <ul>
+                                            <li v-for="i in game.gamePlayers">{{i.player.name}}</li>
+                                        </ul>
+                                    </td>
+                                    <td></td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -68,48 +111,9 @@
     </div>
 
 
-    <!--GAME LIST TABLE-->
-    <div class="container">
-        <div class="card w-100">
-            <div class="card-header">
-                <h5>Game List</h5>
-                <button class="inline btn btn-warning mb-2" id="create-btn" disabled>Create Game</button>
-            </div>
-
-            <div class="card-body">
-                <table class="table">
-                    <thead>
-                       <tr>
-                          <th scope="col">Game</th>
-                          <th scope="col">Date</th>
-                          <th scope="col">Players</th>
-                       </tr>
-                    </thead>
-                    <tbody id="game-list">
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <!--<section>
-        <div id="app" class="p-4">
-            <ul class="games-list">
-                <li v-for="game in games" class="pt-2">Game no. {{game.id}} created on {{game.created}}
-                    <p>Players:</p>
-                    <ul>
-                        <li v-for="i in game.gamePlayers">{{i.player.email}}</li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </section>-->
-
-
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="../web/js/jquery-3.3.1.min.js"></script>
     <script src="../web/js/games.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-
     <!--BOOTSTRAP SCRIPTS-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

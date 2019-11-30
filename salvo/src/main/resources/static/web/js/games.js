@@ -1,8 +1,42 @@
-//JQuery VERSION
-$(function() {
-    loadGames()
-    loadLeaderBoard()
+// VUE.JS VERSION
+var app = new Vue({
+    el: "#app",
+    data: {
+        games: [],
+        player:{},
+        leaderboard:[]
+    },
+    methods: {
+        logIn: function (){
+
+        }
+
+    }
 });
+
+//GET GAMES FOR GAME LIST
+fetch("/api/games")
+.then(response => response.json())
+.then(json => {
+    app.games = json.games;
+    app.player = json.player;
+    changeDateFormat();
+});
+
+//GET LEADERBOARD
+fetch("/api/leaderboard")
+.then(response=> response.json())
+.then(json=> {
+    app.leaderboard = json.sort((a,b) => b.total - a.total);
+});
+
+function changeDateFormat (){
+    for (i in app.games){
+        var newDate = new Date(app.games[i].created).toLocaleString();
+        app.games[i].created = newDate
+    }
+}
+
 
 //LOG IN - SING UP - LOG OUT
 $(document).ready(function() {
@@ -59,61 +93,18 @@ $(document).ready(function() {
 });
 
 
-function loadAccount(){
+//RETURN TO GAME (should do this if (1) there is logged in user, and (2) that user is a player in that game)
+function returnGame(){
+    var returnBtn ='<button class="inline btn btn-warning mb-2" id="return-btn"  disabled>Return to Game</button>';
 
 }
 
+//JOIN AN EXISTANT GAME THAT needs one more player, and is not the same player
 
-// load and display JSON of Game List and Leaderboard
-function loadGames() {
-    $.get("/api/games")
-        .done(function(data){
-            updateGamesView(data);
-        })
-        .fail(function(jqXHR, textStatus) {
-            alert("Failed: " + textStatus);
-        });
-}
+function updateJoinGame(info){
+    var joinButton ='<button class="inline btn btn-warning mb-2" id="join-btn" name="join" disabled>Join Game</button>'
 
-function loadLeaderBoard(){
-    $.get("/api/leaderboard")
-    .done(function(data){
-        updateLeaderboard(data);
-    })
-    .fail(function(jqXHR, textStatus){
-        alert("Failed: " + textStatus);
-    });
-}
-
-function updateGamesView(data) { //for the JSON Table of current games and their players
-    let htmlList = data.games.map(function(games) {
-        return '<tr><th scope="row">'+ games.id +'</th><td>' + new Date(games.created).toLocaleString()
-        +'</td><td>' + games.gamePlayers.map(function(gp) {
-                return gp.player.name
-            }).join('  VS  ') + '</td></tr>';
-    }).join('');
-    document.getElementById("game-list").innerHTML = htmlList;
-}
-
-function updateLeaderboard(data){ //for the JSON Leaderboard Table
-    var users = data.sort((a,b) => b.total - a.total);
-
-    let htmlList = users.map(function(data){
-        return '<tr><th scope="row">'
-        + data.user +'</th><td>'
-        + data.wins +'</td><td>'
-        + data.loses +'</td><td>'
-        + data.ties +'</td><td>'
-        + data.total + '</td></tr>' }).join('');
-    document.getElementById("leaderboard").innerHTML = htmlList;
-}
-
-//JOIN GAME
-
-function joinGame(){
-var joinButton ='<button class="inline btn btn-warning mb-2" id="join-btn" name="join" disabled>Join Game</button>'
-
-
+    return console.log(info.games);
 }
 
 //CREATE A NEW GAME add new game with logged in user as new gameplayer
@@ -130,26 +121,5 @@ function createGame() {
         });
 }
 
- /* VUE.JS VERSION
 
-fetch("/api/games")
-.then(res => res.json())
-.then(json => {
-    app.games = json
-})
 
-var app = new Vue({
-    el: "#app",
-    data: {
-        games: []
-    }
-});
-
-function changeDateFormat (){
-    for (i in app.games){
-        var newDate = new Date(app.games[i].created).toLocaleString();
-        app.games[i].created = newDate
-    }
-}
-
-*/

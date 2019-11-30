@@ -68,6 +68,7 @@ public class SalvoApplication extends SpringBootServletInitializer {
 			Game game1 = gameRepository.save(new Game(date1));
 			Game game2 = gameRepository.save(new Game(date2));
 			Game game3 = gameRepository.save(new Game(date3));
+			Game game4 = gameRepository.save(new Game(date3));
 
 			GamePlayer gp1 = new GamePlayer(date1,game1,player1);
 			GamePlayer gp2 = new GamePlayer(date1, game1,player2);
@@ -78,6 +79,8 @@ public class SalvoApplication extends SpringBootServletInitializer {
 			GamePlayer gp5 = new GamePlayer(date3, game3,player2);
 			GamePlayer gp6 = new GamePlayer(date3, game3,player4);
 
+			GamePlayer gp7 = new GamePlayer(date3, game4,player3);
+
 			gamePlayerRepository.save(gp1);
 			gamePlayerRepository.save(gp2);
 
@@ -86,6 +89,8 @@ public class SalvoApplication extends SpringBootServletInitializer {
 
 			gamePlayerRepository.save(gp5);
 			gamePlayerRepository.save(gp6);
+
+			gamePlayerRepository.save(gp7);
 
 			List<String> location1 = new ArrayList<>(Arrays.asList("H2","H3","H4"));
 			List<String> location2 = new ArrayList<>(Arrays.asList("E1", "F1", "G1"));
@@ -167,7 +172,7 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 			.antMatchers("/api/login", "/api/players").permitAll()
 			.antMatchers("/web/games.html", "/web/js/*", "/web/css/*", "/api/games","/api/leaderboard").permitAll()
-			.antMatchers("/web/game.html*","/api/*").hasAuthority("USER")
+			.antMatchers("/web/game.html*","/api/*","/api/game_view/*").hasAuthority("USER")
 			.anyRequest().denyAll();
 
 		http.formLogin()

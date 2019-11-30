@@ -36,7 +36,9 @@ public class SalvoController {
   @Autowired
   private PasswordEncoder passwordEncoder;
 
+  //TO GET PLAYERS GAMES
 
+    //TO CREATE NEW PLAYER (POST)
   @RequestMapping(path = "/players", method = RequestMethod.POST)
   public ResponseEntity<Map<String, Object>> createPlayer(@RequestParam String username,@RequestParam String password) {
 
@@ -60,7 +62,7 @@ public class SalvoController {
     map.put(key, value);
     return map;}
 
-
+    //TO GET THE GAME LIST OF THAT PLAYER (GET)
   @RequestMapping("/games")
   public Map<String,Object> getGame(Authentication authentication){
     Map<String,Object> dto = new LinkedHashMap<>();
@@ -75,6 +77,7 @@ public class SalvoController {
     return dto;
   }
 
+    //TO CREATE A NEW GAME (POST)
   @RequestMapping(path = "/games", method = RequestMethod.POST)
   public ResponseEntity<Map<String, Object>> createGame(Authentication authentication){
     if(isGuest(authentication)){
