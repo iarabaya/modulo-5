@@ -9,19 +9,20 @@
 </head>
 
 <body>
-    <header >
+    <div id="app" >
+        <header >
         <div class="bg-info text-light text-center py-5">
             <h1>Salvo Games</h1>
         </div>
 
         <nav class="navbar navbar-dark bg-dark">
-            <h2 class="navbar-text" id="account">User: Guest</h2>
-            <button class="btn btn-outline-danger mb-2" id="logout-btn" name="logout-btn">Log Out</button>
+            <h2 class="navbar-text" id="account">User: {{player}}</h2>
+            <button class="btn btn-outline-danger mb-2" id="logout-btn" name="logout-btn" @click="logOut()">Log Out</button>
         </nav>
 
     </header>
 
-    <div id="app" class="container" >
+    <div class="container" >
         <div class="row">
             <div id="login-card">
                 <!--LOGIN CARD-->
@@ -35,8 +36,8 @@
                         </div>
 
                         <div>
-                            <button class="btn btn-info mb-2" id="login-btn" name="login-btn">Log In</button>
-                            <button class="btn btn-warning mb-2" id="signup-btn" name="signup-btn">Sign Up</button>
+                            <button class="btn btn-info mb-2" id="login-btn" name="login-btn" @click="logIn()">Log In</button>
+                            <button class="btn btn-warning mb-2" id="signup-btn" name="signup-btn" @click="signUp()">Sign Up</button>
                         </div>
 
                     </div>
@@ -100,10 +101,15 @@
                                             <li v-for="i in game.gamePlayers">{{i.player.name}}</li>
                                         </ul>
                                     </td>
-                                    <td></td>
+                                    <td>
+                                        <button class="inline btn btn-warning mb-2" id="status-btn" >
+                                            <a href="game.html?gp=">{{statusBtn(game.gamePlayers)}}</a>
+                                        </button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
+                        </div>
                     </div>
                 </div>
             </div>
