@@ -102,7 +102,9 @@
                                             <li v-for="item in game.gamePlayers">{{item.player.name}}</li>
                                         </ul>
                                     </td>
-                                    <td v-if="logged" v-html="statusBtn(game.gamePlayers)"></td>
+                                    <td v-if="logged">
+                                        <status-button :status="statusText(game.gamePlayers)" :action="getAction(game.gamePlayers)" :game-players="game.gamePlayers"></status-button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>

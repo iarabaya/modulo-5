@@ -1,3 +1,21 @@
+Vue.component('status-button',{
+    template: '<button :class=buttonType(status) v-on:click="action()">{{ status }}</button>',
+    props: ['status', 'game-players', 'action'],
+    methods:{
+        buttonType: function(status){
+            var type='';
+            if(status == 'Full'){
+                type = 'inline btn btn-danger mb-2'
+            }else if(status == 'join game'){
+                type = 'inline btn btn-primary mb-2'
+            }else{
+                type= 'inline btn btn-warning mb-2'
+            }
+            return type;
+        }
+    }
+})
+
 // VUE.JS VERSION
 var app = new Vue({
     el: "#app",
@@ -19,8 +37,6 @@ var app = new Vue({
                                        alert('Failed at log');
                                    });
 
-                      console.log('logged in');
-
                     },
 
         logOut: function(){
@@ -31,7 +47,6 @@ var app = new Vue({
                             alert('Failed at log out')
                             });
 
-             console.log('logged out');
              this.player = 'Guest';
         },
 
@@ -47,7 +62,6 @@ var app = new Vue({
                     alert('Failed at sign up')
                 });
                 this.logIn();
-                console.log('sign in');
         },
 
         createGame: function(){
@@ -60,30 +74,43 @@ var app = new Vue({
                   });
         },
 
-        joinGame: function(){
-          console.log('joining');
-        },
-
     //RETURN TO GAME (should do this if (1) there is logged in user, and (2) that user is a player in that game)
     //JOIN AN EXISTANT GAME THAT needs one more player, and is not the same player
-        statusBtn: function(gamePlayers){
+        statusText: function(gamePlayers){
             var status = '';
-            var btn = '';
             var gpid = 0;
 
             if(gamePlayers.length <= 1 && gamePlayers[0].player.name != this.player.name){
                 status = 'join game';
-                btn = '<button class="inline btn btn-primary mb-2">'+ status +'</button>';
             }else if(gamePlayers[0].player.name == this.player.name || gamePlayers[1].player.name == this.player.name){
-                status = 'return to game';
                 gpid = gamePlayers[0].player.name == this.player.name? gamePlayers[0].gpid : gamePlayers[1].gpid;
-                btn = '<button class="inline btn btn-warning mb-2"><a href="game.html?gp='+ gpid +'">'+ status +'</a></button>';
+                status = 'return to game';
              }else{
                 status = 'Full';
              }
 
+            return status;
+        },
+        getAction: function(gamePlayers){
 
-            return status == 'Full'? '<button class="btn btn-danger mb-2" disabled>Full</button>': btn;
+            var action;
+            var gpid;
+
+               if(gamePlayers.length <= 1 && gamePlayers[0].player.name != this.player.name){
+                   action = function(){
+                        alert("Join!");
+                   }
+                    }else if(gamePlayers[0].player.name == this.player.name || gamePlayers[1].player.name == this.player.name){
+                        gpid = gamePlayers[0].player.name == this.player.name? gamePlayers[0].gpid : gamePlayers[1].gpid;
+                        action = function(){
+                            location.replace('game.html?gp='+ gpid)
+                        }
+                     }else{
+                        action = function(){
+                            alert("Full!")
+                        }
+                     }
+                    return action;
         }
     },
     computed:{

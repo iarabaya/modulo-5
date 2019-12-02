@@ -101,23 +101,20 @@ public class SalvoController {
     return authentication == null || authentication instanceof AnonymousAuthenticationToken;
   }
 
-//TO GET GAME VIEW (FALTA AUTENTICACIÓN??)
-  @RequestMapping("/game_view/{gamePlayerId}")
-  public Map<String,Object> getGameView(@PathVariable Long gamePlayerId, Authentication authentication){
-
-          return gameViewDTO(gamePlayerRepository.findById(gamePlayerId).orElse(null));
-  }
-
- /* @RequestMapping("/game_view/{gamePlayerId}")
+ @RequestMapping("/game_view/{gamePlayerId}")
   public ResponseEntity<Map<String, Object>> getGameViewAuthenticated(@PathVariable Long gamePlayerId, Authentication authentication){
       if(isGuest(authentication)){
           return new ResponseEntity<>(makeMap("error", "cannot see game as guest" ),HttpStatus.FORBIDDEN);
-      }else{
-          Player player =  playerRepository.findByUserName(authentication.getName());
-          GamePlayer gamePlayer = gamePlayerRepository.findById();
       }
-      return new ResponseEntity<>(makeMap("error", "you are not a player of this game" ),HttpStatus.UNAUTHORIZED);
-  }*/
+      Player player =  playerRepository.findByUserName(authentication.getName());
+      GamePlayer gamePlayer = gamePlayerRepository.findById(gamePlayerId).get();
+
+      if(gamePlayer.getPlayer().getId() != player.getId()){
+        return new ResponseEntity<>(makeMap("error", "you are not a player of this game" ),HttpStatus.UNAUTHORIZED);
+      }
+
+      return new ResponseEntity<>(gameViewDTO(gamePlayer),HttpStatus.OK);
+  }
 
 //TO GET THE LEADERBOARD
   @RequestMapping("/leaderboard")
