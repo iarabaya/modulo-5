@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-show="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
@@ -10,21 +10,22 @@
 
 <body>
     <div id="app" >
-        <header >
+        <header>
         <div class="bg-info text-light text-center py-5">
             <h1>Salvo Games</h1>
         </div>
 
         <nav class="navbar navbar-dark bg-dark">
-            <h2 class="navbar-text" id="account">User: {{player}}</h2>
-            <button class="btn btn-outline-danger mb-2" id="logout-btn" name="logout-btn" @click="logOut()">Log Out</button>
+            <h2 class="navbar-text" id="account">User: {{ player != 'Guest'? player.name : player }}</h2>
+            <button class="btn btn-outline-danger mb-2" id="logout-btn" name="logout-btn" v-on:click="logOut" v-show="logged">Log Out</button>
         </nav>
 
-    </header>
+
+        </header>
 
     <div class="container" >
         <div class="row">
-            <div id="login-card">
+            <div id="login-card" v-show="!logged">
                 <!--LOGIN CARD-->
                 <div class="card" >
                     <h5 class="card-header">Log in</h5>
@@ -36,8 +37,8 @@
                         </div>
 
                         <div>
-                            <button class="btn btn-info mb-2" id="login-btn" name="login-btn" @click="logIn()">Log In</button>
-                            <button class="btn btn-warning mb-2" id="signup-btn" name="signup-btn" @click="signUp()">Sign Up</button>
+                            <button class="btn btn-info mb-2" id="login-btn" name="login-btn" v-on:click="logIn">Log In</button>
+                            <button class="btn btn-warning mb-2" id="signup-btn" name="signup-btn" v-on:click="signUp">Sign Up</button>
                         </div>
 
                     </div>
@@ -62,12 +63,12 @@
                             </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="i in leaderboard">
-                                    <th>{{i.user}}</th>
-                                    <td>{{i.wins}}</td>
-                                    <td>{{i.loses}}</td>
-                                    <td>{{i.ties}}</td>
-                                    <td>{{i.total}}</td>
+                                <tr v-for="item in leaderboard">
+                                    <th>{{item.user}}</th>
+                                    <td>{{item.wins}}</td>
+                                    <td>{{item.loses}}</td>
+                                    <td>{{item.ties}}</td>
+                                    <td>{{item.total}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -79,7 +80,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h5>Game List</h5>
-                        <button class="inline btn btn-warning mb-2" id="create-btn" disabled>Create Game</button>
+                        <button class="inline btn btn-warning mb-2" id="create-btn" v-show="logged" v-on:click="createGame">Create Game</button>
                     </div>
 
                     <div class="card-body">
@@ -98,14 +99,10 @@
                                     <td>{{game.created}}</td>
                                     <td>
                                         <ul>
-                                            <li v-for="i in game.gamePlayers">{{i.player.name}}</li>
+                                            <li v-for="item in game.gamePlayers">{{item.player.name}}</li>
                                         </ul>
                                     </td>
-                                    <td>
-                                        <button class="inline btn btn-warning mb-2" id="status-btn" >
-                                            <a href="game.html?gp=">{{statusBtn(game.gamePlayers)}}</a>
-                                        </button>
-                                    </td>
+                                    <td v-if="logged" v-html="statusBtn(game.gamePlayers)"></td>
                                 </tr>
                             </tbody>
                         </table>
