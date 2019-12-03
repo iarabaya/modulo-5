@@ -1,95 +1,179 @@
-//VUE CODE
-fetch("/api/games")
-.then(res => res.json())
-.then(json => {
-    app.games = json
+//button component which changes style and function depending on the game status
+Vue.component("status-button", {
+  template:
+    '<button :class=buttonType(status) v-on:click="action()">{{ status }}</button>',
+  props: ["status", "game-players", "action"],
+  methods: {
+    buttonType: function(status) {
+      var type = "";
+      if (status == "Full") {
+        type = "inline btn btn-danger mb-2";
+      } else if (status == "join game") {
+        type = "inline btn btn-primary mb-2";
+      } else {
+        type = "inline btn btn-warning mb-2";
+      }
+      return type;
+    }
+  }
+});
 
-    console.log(app.games);
-})
-
+// VUE.JS APP VERSION
 var app = new Vue({
-    el: "#app",
-    data: {
-        games: []
-    }
-});
+  el: "#app",
+  data: {
+    games: [],
+    player: {},
+    leaderboard: []
+  },
+  methods: {
+    logIn: function() {
+      var user = $("#username").val();
+      var pwd = $("#password").val();
 
-function changeDateFormat (){
-    for (i in app.games){
-        var newDate = new Date(app.games[i].created).toLocaleString();
-        app.games[i].created = newDate
-    }
-}
+      $.post("/api/login", { username: user, password: pwd })
+        .done(function() {
+          alert("Logged in successfully!");
+          location.reload();
+        })
+        .fail(function() {
+          alert("Failed at log");
+        });
+    },
 
-//JQuery VERSION
-$(function() {
-    loadData()
-});
+    logOut: function() {
+      $.post("/api/logout")
+        .done(function() {
+          alert("Logged out successfully!");
+        })
+        .fail(function() {
+          alert("Failed at log out");
+        });
 
-$(document).ready(function() {
-    $('#login-btn').on('click', function() {
+      this.player = "Guest";
+    },
 
-        var user = $('#username').val();
-        var pwd = $('#password').val();
+    signUp: function() {
+      var user = $("#username").val();
+      var pwd = $("#password").val();
 
-        $.post("/api/login", { username: user, password: pwd })
-            .done(function() {
-                var msg = '<h2>Logged in!</h2>';
-                $('#log').html(msg);
+      $.post("/api/players", { username: user, password: pwd })
+        .done(function() {
+          alert("Account created");
+        })
+        .fail(function() {
+          alert("Failed at sign up");
+        });
+      this.logIn();
+    },
 
-            }).fail(function() {
-                alert('Failed at log');
+    createGame: function() {
+      $.post("/api/games")
+        .done(function() {
+          console.log("Game created successfully");
+        })
+        .fail(function(jqXHR, textStatus) {
+          alert("Failed: " + textStatus);
+        });
+    },
+
+    //sets up the button message depending on the needed function
+    statusText: function(gamePlayers) {
+      var status = "";
+      var gpid = 0;
+
+      if (
+        gamePlayers.length <= 1 &&
+        gamePlayers[0].player.name != this.player.name
+      ) {
+        status = "join game";
+      } else if (
+        gamePlayers[0].player.name == this.player.name ||
+        gamePlayers[1].player.name == this.player.name
+      ) {
+        gpid =
+          gamePlayers[0].player.name == this.player.name
+            ? gamePlayers[0].gpid
+            : gamePlayers[1].gpid;
+        status = "return to game";
+      } else {
+        status = "Full";
+      }
+
+      return status;
+    },
+    //RETURN TO GAME (should do this if (1) there is logged in user, and (2) that user is a player in that game)
+    //JOIN AN EXISTANT GAME THAT needs one more player, and is not the same player
+    getAction: function(gamePlayers, gameId) {
+      var action;
+      var gpid;
+
+      if (
+        gamePlayers.length <= 1 &&
+        gamePlayers[0].player.name != this.player.name
+      ) {
+        action = function() {
+          var content;
+          $.post("/api/game/" + gameId + "/players")
+            .done(function(data) {
+              alert("joined game" + data);
+              gpid = data.gpid;
+              location.replace("game.html?gp=" + gpid);
+            })
+            .fail(function(jqXHR, textStatus) {
+              alert("Failed: " + textStatus);
             });
-
-    });
+        };
+      } else if (
+        gamePlayers[0].player.name == this.player.name ||
+        gamePlayers[1].player.name == this.player.name
+      ) {
+        gpid =
+          gamePlayers[0].player.name == this.player.name
+            ? gamePlayers[0].gpid
+            : gamePlayers[1].gpid;
+        action = function() {
+          location.replace("game.html?gp=" + gpid);
+        };
+      } else {
+        action = function() {
+          alert("Full!");
+        };
+      }
+      return action;
+    }
+  }, //just a property to check if someone is logged or not
+  computed: {
+    logged: function() {
+      if (this.player == "Guest") {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  }
 });
 
-// load and display JSON sent by server for /players
+/********************** THE AJAX CALLS *********************************************************************************************/
+//GET GAMES FOR GAME LIST
+fetch("/api/games")
+  .then(response => response.json())
+  .then(json => {
+    app.games = json.games;
+    app.player = json.player;
+    changeDateFormat();
+  });
 
-function loadData() {
-    $.get("/api/games")
-        .done(function(data) {
-            updateView(data);
-        })
-        .fail(function(jqXHR, textStatus) {
-            alert("Failed: " + textStatus);
-        });
+//GET LEADERBOARD
+fetch("/api/leaderboard")
+  .then(response => response.json())
+  .then(json => {
+    app.leaderboard = json.sort((a, b) => b.total - a.total);
+  });
+
+function changeDateFormat() {
+  for (i in app.games) {
+    var newDate = new Date(app.games[i].created).toLocaleString();
+    app.games[i].created = newDate;
+  }
 }
-
-function updateView(data) { //for the JSON list of current games and their players
-    let htmlList = data.games.map(function(games) {
-        return '<li>' + new Date(games.creationDate).toLocaleString() + ' ' +
-            games.gamePlayers.map(function(gp) {
-                return gp.player.userName
-            }).join(' , ') + '</li>';
-    }).join('');
-    document.getElementById("game-list1").innerHTML = htmlList;
-}
-
-function createGame() {
-    $.post("/api/games") //add new game with logged in user as new gameplayer
-        .done(function(data) {
-            var gpid = data.gamePlayers.gpid;
-
-            console.log('Game created successfully')
-        })
-        .fail(function(jqXHR, textStatus) {
-            alert('Failed: ' + textStatus)
-        });
-}
-
-/*function joinGame(){ //add a new game player entry
-    $.post("/api/games/{}/players")
-        .done(function(){
-            if(){ //logged in condition
-
-            }
-
-            if(){ //the user is a player in that game
-
-            }
-        })
-        .fail(function(jqXHR, textStatus){
-            alert('Failed: '+textStatus)
-        });
-}*/

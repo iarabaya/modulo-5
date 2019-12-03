@@ -1,65 +1,125 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-show="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
-    <title>Salvo!</title>
-    <link rel="stylesheet" type="text/css" href="css/game.css">
+    <title>Salvo!Games</title>
+    <link rel="stylesheet" type="text/css" href="css/games.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 <body>
-    <header class="bg-success text-light text-center py-5">
-        <h1>Salvo Games</h1>
-    </header>
-
-
-    <p>Login</p>
-    <div>
-
-        <div>
-            <label>Email: <input type="text" class="form-control mb-2 mr-sm-2" id="username" name="username" ></label>
-            <label>Password: <input type="password" class="form-control" id="password" name="password"></label>
+    <div id="app" >
+        <header>
+        <div class="bg-info text-light text-center py-5">
+            <h1>Salvo Games</h1>
         </div>
 
-        <div>
-            <button class="btn btn-primary mb-2" id="login-btn" name="login">Log In</button>
-            <!--<button type="submit" class="btn btn-danger mb-3">Log Out</button>
-                <button type="submit" class="btn btn-warning mb-3">Sign Up</button>-->
+        <nav class="navbar navbar-dark bg-dark">
+            <h2 class="navbar-text" id="account">User: {{ player != 'Guest'? player.name : player }}</h2>
+            <button class="btn btn-outline-danger mb-2" id="logout-btn" name="logout-btn" v-on:click="logOut" v-show="logged">Log Out</button>
+        </nav>
+
+
+        </header>
+
+    <div class="container" >
+        <div class="row">
+            <div id="login-card" v-show="!logged">
+                <!--LOGIN CARD-->
+                <div class="card" >
+                    <h5 class="card-header">Log in</h5>
+                    <div class="card-body">
+                        <div class="card-text">
+                            <div id="missing"></div>
+                            <label>Email: <input type="text" class="form-control mb-2 mr-sm-2" id="username" ></label>
+                            <label>Password: <input type="password" class="form-control" id="password"></label>
+                        </div>
+
+                        <div>
+                            <button class="btn btn-info mb-2" id="login-btn" name="login-btn" v-on:click="logIn">Log In</button>
+                            <button class="btn btn-warning mb-2" id="signup-btn" name="signup-btn" v-on:click="signUp">Sign Up</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
 
+        <div class="row">
+            <!--LEADERBOARD TABLE-->
+            <div class="col">
+                <div class="card">
+                    <h5 class="card-header">Leaderboard</h5>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">User</th>
+                                <th scope="col">Won</th>
+                                <th scope="col">Losses</th>
+                                <th scope="col">Ties</th>
+                                <th scope="col">Score</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="item in leaderboard">
+                                    <th>{{item.user}}</th>
+                                    <td>{{item.wins}}</td>
+                                    <td>{{item.loses}}</td>
+                                    <td>{{item.ties}}</td>
+                                    <td>{{item.total}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!--GAME LIST TABLE-->
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Game List</h5>
+                        <button class="inline btn btn-warning mb-2" id="create-btn" v-show="logged" v-on:click="createGame">Create Game</button>
+                    </div>
+
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Game</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Players</th>
+                                <th scope="col">Status</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="game in games">
+                                    <th>{{game.id}}</th>
+                                    <td>{{game.created}}</td>
+                                    <td>
+                                        <ul>
+                                            <li v-for="item in game.gamePlayers">{{item.player.name}}</li>
+                                        </ul>
+                                    </td>
+                                    <td v-if="logged">
+                                        <status-button :status="statusText(game.gamePlayers)" :action="getAction(game.gamePlayers, game.id)" :game-players="game.gamePlayers"></status-button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 
-
-    <p>Game List</p>
-    <button class="btn btn-warning mb-2" id="create-btn" name="create">Create Game</button>
-    <button class="btn btn-warning mb-2" id="join-btn" name="join">Join Game</button>
-    <ul id="game-list1">
-    </ul>
-
-    <section>
-        <div id="app" class="p-4">
-            <ul class="games-list">
-                <li v-for="game in games" class="pt-2">
-                    Game n° {{game.id}} created on {{game.created}}
-                    <p>Players:</p>
-                    <ul>
-                        <li v-for="i in game.gamePlayers">{{i.player.name}}</li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </section>
-
-
-
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="../web/js/jquery-3.3.1.min.js"></script>
     <script src="../web/js/games.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-
     <!--BOOTSTRAP SCRIPTS-->
-    <script src="https://code.jquery.com/jquery-2.2.0.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>

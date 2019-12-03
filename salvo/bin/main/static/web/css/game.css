@@ -1,11 +1,23 @@
+body {
+  background-image: url(img/sea-bg.jpg);
+}
+
+table {
+  background-color: white;
+}
+
+h2 {
+  color: white;
+}
+
 .ship-piece {
-    background-color: darkslateblue;
+  background-color: darkslateblue;
 }
 
 .ship-piece-hited {
-    background-color: orange;
+  background-color: orange;
 }
 
 .salvo {
-    background-color: crimson;
+  background-color: crimson;
 }

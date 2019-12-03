@@ -5,316 +5,349 @@
     <meta charset="UTF-8">
     <title>Ships locations!</title>
     <link rel="stylesheet" type="text/css" href="css/game.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 
 <body>
-    <div>
-        <span id="playerInfo"></span>
+
+    <nav class="navbar navbar-light bg-light">
+        <span class="navbar-brand mb-0 h1" id="playerInfo"></span>
+        <a class="btn btn-primary" href="games.html" role="button">Go back to Games</a>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div>
+                    <span>
+                        <h2 class="text-center bg-primary ">Game Board</h2>
+                    </span>
+
+                    <table class="table table-bordered" id="game-board">
+                        <thead>
+                            <th></th>
+                            <th id="bth_0">1</th>
+                            <th id="bth_1">2</th>
+                            <th id="bth_2">3</th>
+                            <th id="bth_3">4</th>
+                            <th id="bth_4">5</th>
+                            <th id="bth_5">6</th>
+                            <th id="bth_6">7</th>
+                            <th id="bth_7">8</th>
+                            <th id="bth_8">9</th>
+                            <th id="bth_9">10</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>A</td>
+                                <td id="A1"></td>
+                                <td id="A2"></td>
+                                <td id="A3"></td>
+                                <td id="A4"></td>
+                                <td id="A5"></td>
+                                <td id="A6"></td>
+                                <td id="A7"></td>
+                                <td id="A8"></td>
+                                <td id="A9"></td>
+                                <td id="A10"></td>
+                            </tr>
+                            <tr>
+                                <td>B</td>
+                                <td id="B1"></td>
+                                <td id="B2"></td>
+                                <td id="B3"></td>
+                                <td id="B4"></td>
+                                <td id="B5"></td>
+                                <td id="B6"></td>
+                                <td id="B7"></td>
+                                <td id="B8"></td>
+                                <td id="B9"></td>
+                                <td id="B10"></td>
+                            </tr>
+                            <tr>
+                                <td>C</td>
+                                <td id="C1"></td>
+                                <td id="C2"></td>
+                                <td id="C3"></td>
+                                <td id="C4"></td>
+                                <td id="C5"></td>
+                                <td id="C6"></td>
+                                <td id="C7"></td>
+                                <td id="C8"></td>
+                                <td id="C9"></td>
+                                <td id="C10"></td>
+                            </tr>
+                            <tr>
+                                <td>D</td>
+                                <td id="D1"></td>
+                                <td id="D2"></td>
+                                <td id="D3"></td>
+                                <td id="D4"></td>
+                                <td id="D5"></td>
+                                <td id="D6"></td>
+                                <td id="D7"></td>
+                                <td id="D8"></td>
+                                <td id="D9"></td>
+                                <td id="D10"></td>
+                            </tr>
+                            <tr>
+                                <td>E</td>
+                                <td id="E1"></td>
+                                <td id="E2"></td>
+                                <td id="E3"></td>
+                                <td id="E4"></td>
+                                <td id="E5"></td>
+                                <td id="E6"></td>
+                                <td id="E7"></td>
+                                <td id="E8"></td>
+                                <td id="E9"></td>
+                                <td id="E10"></td>
+                            </tr>
+                            <tr>
+                                <td>F</td>
+                                <td id="F1"></td>
+                                <td id="F2"></td>
+                                <td id="F3"></td>
+                                <td id="F4"></td>
+                                <td id="F5"></td>
+                                <td id="F6"></td>
+                                <td id="F7"></td>
+                                <td id="F8"></td>
+                                <td id="F9"></td>
+                                <td id="F10"></td>
+                            </tr>
+                            <tr>
+                                <td>G</td>
+                                <td id="G1"></td>
+                                <td id="G2"></td>
+                                <td id="G3"></td>
+                                <td id="G4"></td>
+                                <td id="G5"></td>
+                                <td id="G6"></td>
+                                <td id="G7"></td>
+                                <td id="G8"></td>
+                                <td id="G9"></td>
+                                <td id="G10"></td>
+                            </tr>
+                            <tr>
+                                <td>H</td>
+                                <td id="H1"></td>
+                                <td id="H2"></td>
+                                <td id="H3"></td>
+                                <td id="H4"></td>
+                                <td id="H5"></td>
+                                <td id="H6"></td>
+                                <td id="H7"></td>
+                                <td id="H8"></td>
+                                <td id="H9"></td>
+                                <td id="H10"></td>
+                            </tr>
+                            <tr>
+                                <td>I</td>
+                                <td id="I1"></td>
+                                <td id="I2"></td>
+                                <td id="I3"></td>
+                                <td id="I4"></td>
+                                <td id="I5"></td>
+                                <td id="I6"></td>
+                                <td id="I7"></td>
+                                <td id="I8"></td>
+                                <td id="I9"></td>
+                                <td id="I10"></td>
+                            </tr>
+                            <tr>
+                                <td>J</td>
+                                <td id="J1"></td>
+                                <td id="J2"></td>
+                                <td id="J3"></td>
+                                <td id="J4"></td>
+                                <td id="J5"></td>
+                                <td id="J6"></td>
+                                <td id="J7"></td>
+                                <td id="J8"></td>
+                                <td id="J9"></td>
+                                <td id="J10"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col">
+                <div>
+                    <span>
+                        <h2 class="text-center bg-danger">Radar</h2>
+                    </span>
+
+                    <table class="table table-bordered" id="enemy-board">
+                        <thead>
+                            <th></th>
+                            <th id="T2_th_1">2</th>
+                            <th id="T2_th_2">3</th>
+                            <th id="T2_th_3">4</th>
+                            <th id="T2_th_4">5</th>
+                            <th id="T2_th_">1</th>
+                            <th id="T2_th_5">6</th>
+                            <th id="T2_th_6">7</th>
+                            <th id="T2_th_7">8</th>
+                            <th id="T2_th_8">9</th>
+                            <th id="T2_th_9">10</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>A</td>
+                                <td id="T2_A1"></td>
+                                <td id="T2_A2"></td>
+                                <td id="T2_A3"></td>
+                                <td id="T2_A4"></td>
+                                <td id="T2_A5"></td>
+                                <td id="T2_A6"></td>
+                                <td id="T2_A7"></td>
+                                <td id="T2_A8"></td>
+                                <td id="T2_A9"></td>
+                                <td id="T2_A10"></td>
+                            </tr>
+                            <tr>
+                                <td>B</td>
+                                <td id="T2_B1"></td>
+                                <td id="T2_B2"></td>
+                                <td id="T2_B3"></td>
+                                <td id="T2_B4"></td>
+                                <td id="T2_B5"></td>
+                                <td id="T2_B6"></td>
+                                <td id="T2_B7"></td>
+                                <td id="T2_B8"></td>
+                                <td id="T2_B9"></td>
+                                <td id="T2_B10"></td>
+                            </tr>
+                            <tr>
+                                <td>C</td>
+                                <td id="T2_C1"></td>
+                                <td id="T2_C2"></td>
+                                <td id="T2_C3"></td>
+                                <td id="T2_C4"></td>
+                                <td id="T2_C5"></td>
+                                <td id="T2_C6"></td>
+                                <td id="T2_C7"></td>
+                                <td id="T2_C8"></td>
+                                <td id="T2_C9"></td>
+                                <td id="T2_C10"></td>
+                            </tr>
+                            <tr>
+                                <td>D</td>
+                                <td id="T2_D1"></td>
+                                <td id="T2_D2"></td>
+                                <td id="T2_D3"></td>
+                                <td id="T2_D4"></td>
+                                <td id="T2_D5"></td>
+                                <td id="T2_D6"></td>
+                                <td id="T2_D7"></td>
+                                <td id="T2_D8"></td>
+                                <td id="T2_D9"></td>
+                                <td id="T2_D10"></td>
+                            </tr>
+                            <tr>
+                                <td>E</td>
+                                <td id="T2_E1"></td>
+                                <td id="T2_E2"></td>
+                                <td id="T2_E3"></td>
+                                <td id="T2_E4"></td>
+                                <td id="T2_E5"></td>
+                                <td id="T2_E6"></td>
+                                <td id="T2_E7"></td>
+                                <td id="T2_E8"></td>
+                                <td id="T2_E9"></td>
+                                <td id="T2_E10"></td>
+                            </tr>
+                            <tr>
+                                <td>F</td>
+                                <td id="T2_F1"></td>
+                                <td id="T2_F2"></td>
+                                <td id="T2_F3"></td>
+                                <td id="T2_F4"></td>
+                                <td id="T2_F5"></td>
+                                <td id="T2_F6"></td>
+                                <td id="T2_F7"></td>
+                                <td id="T2_F8"></td>
+                                <td id="T2_F9"></td>
+                                <td id="T2_F10"></td>
+                            </tr>
+                            <tr>
+                                <td>G</td>
+                                <td id="T2_G1"></td>
+                                <td id="T2_G2"></td>
+                                <td id="T2_G3"></td>
+                                <td id="T2_G4"></td>
+                                <td id="T2_G5"></td>
+                                <td id="T2_G6"></td>
+                                <td id="T2_G7"></td>
+                                <td id="T2_G8"></td>
+                                <td id="T2_G9"></td>
+                                <td id="T2_G10"></td>
+                            </tr>
+                            <tr>
+                                <td>H</td>
+                                <td id="T2_H1"></td>
+                                <td id="T2_H2"></td>
+                                <td id="T2_H3"></td>
+                                <td id="T2_H4"></td>
+                                <td id="T2_H5"></td>
+                                <td id="T2_H6"></td>
+                                <td id="T2_H7"></td>
+                                <td id="T2_H8"></td>
+                                <td id="T2_H9"></td>
+                                <td id="T2_H10"></td>
+                            </tr>
+                            <tr>
+                                <td>I</td>
+                                <td id="T2_I1"></td>
+                                <td id="T2_I2"></td>
+                                <td id="T2_I3"></td>
+                                <td id="T2_I4"></td>
+                                <td id="T2_I5"></td>
+                                <td id="T2_I6"></td>
+                                <td id="T2_I7"></td>
+                                <td id="T2_I8"></td>
+                                <td id="T2_I9"></td>
+                                <td id="T2_I10"></td>
+                            </tr>
+                            <tr>
+                                <td>J</td>
+                                <td id="T2_J1"></td>
+                                <td id="T2_J2"></td>
+                                <td id="T2_J3"></td>
+                                <td id="T2_J4"></td>
+                                <td id="T2_J5"></td>
+                                <td id="T2_J6"></td>
+                                <td id="T2_J7"></td>
+                                <td id="T2_J8"></td>
+                                <td id="T2_J9"></td>
+                                <td id="T2_J10"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
     </div>
 
-    <div class="row">
-        <div class="col">
-            <section>
-                <h2>Game Board</h2>
-                <table border="1" id="game-board">
-                    <thead>
-                        <th></th>
-                   </thead>
-                    <tbody>
-                        <tr>
-                            <td>A</td>
-                            <td id="A1"></td>
-                            <td id="A2"></td>
-                            <td id="A3"></td>
-                            <td id="A4"></td>
-                            <td id="A5"></td>
-                            <td id="A6"></td>
-                            <td id="A7"></td>
-                            <td id="A8"></td>
-                            <td id="A9"></td>
-                            <td id="A10"></td>
-                        </tr>
-                        <tr>
-                            <td>B</td>
-                            <td id="B1"></td>
-                            <td id="B2"></td>
-                            <td id="B3"></td>
-                            <td id="B4"></td>
-                            <td id="B5"></td>
-                            <td id="B6"></td>
-                            <td id="B7"></td>
-                            <td id="B8"></td>
-                            <td id="B9"></td>
-                            <td id="B10"></td>
-                        </tr>
-                        <tr>
-                            <td>C</td>
-                            <td id="C1"></td>
-                            <td id="C2"></td>
-                            <td id="C3"></td>
-                            <td id="C4"></td>
-                            <td id="C5"></td>
-                            <td id="C6"></td>
-                            <td id="C7"></td>
-                            <td id="C8"></td>
-                            <td id="C9"></td>
-                            <td id="C10"></td>
-                        </tr>
-                        <tr>
-                            <td>D</td>
-                            <td id="D1"></td>
-                            <td id="D2"></td>
-                            <td id="D3"></td>
-                            <td id="D4"></td>
-                            <td id="D5"></td>
-                            <td id="D6"></td>
-                            <td id="D7"></td>
-                            <td id="D8"></td>
-                            <td id="D9"></td>
-                            <td id="D10"></td>
-                        </tr>
-                        <tr>
-                            <td>E</td>
-                            <td id="E1"></td>
-                            <td id="E2"></td>
-                            <td id="E3"></td>
-                            <td id="E4"></td>
-                            <td id="E5"></td>
-                            <td id="E6"></td>
-                            <td id="E7"></td>
-                            <td id="E8"></td>
-                            <td id="E9"></td>
-                            <td id="E10"></td>
-                        </tr>
-                        <tr>
-                            <td>F</td>
-                            <td id="F1"></td>
-                            <td id="F2"></td>
-                            <td id="F3"></td>
-                            <td id="F4"></td>
-                            <td id="F5"></td>
-                            <td id="F6"></td>
-                            <td id="F7"></td>
-                            <td id="F8"></td>
-                            <td id="F9"></td>
-                            <td id="F10"></td>
-                        </tr>
-                        <tr>
-                            <td>G</td>
-                            <td id="G1"></td>
-                            <td id="G2"></td>
-                            <td id="G3"></td>
-                            <td id="G4"></td>
-                            <td id="G5"></td>
-                            <td id="G6"></td>
-                            <td id="G7"></td>
-                            <td id="G8"></td>
-                            <td id="G9"></td>
-                            <td id="G10"></td>
-                        </tr>
-                        <tr>
-                            <td>H</td>
-                            <td id="H1"></td>
-                            <td id="H2"></td>
-                            <td id="H3"></td>
-                            <td id="H4"></td>
-                            <td id="H5"></td>
-                            <td id="H6"></td>
-                            <td id="H7"></td>
-                            <td id="H8"></td>
-                            <td id="H9"></td>
-                            <td id="H10"></td>
-                        </tr>
-                        <tr>
-                            <td>I</td>
-                            <td id="I1"></td>
-                            <td id="I2"></td>
-                            <td id="I3"></td>
-                            <td id="I4"></td>
-                            <td id="I5"></td>
-                            <td id="I6"></td>
-                            <td id="I7"></td>
-                            <td id="I8"></td>
-                            <td id="I9"></td>
-                            <td id="I10"></td>
-                        </tr>
-                        <tr>
-                            <td>J</td>
-                            <td id="J1"></td>
-                            <td id="J2"></td>
-                            <td id="J3"></td>
-                            <td id="J4"></td>
-                            <td id="J5"></td>
-                            <td id="J6"></td>
-                            <td id="J7"></td>
-                            <td id="J8"></td>
-                            <td id="J9"></td>
-                            <td id="J10"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-        </div>
-
-        <div class="col">
-            <section>
-                <h2>Radar</h2>
-                <table border="1" id="enemy-board">
-                    <thead>
-                        <th></th>
-                        <th id="T2_th_1">2</th>
-                        <th id="T2_th_2">3</th>
-                        <th id="T2_th_3">4</th>
-                        <th id="T2_th_4">5</th>
-                        <th id="T2_th_">1</th>
-                        <th id="T2_th_5">6</th>
-                        <th id="T2_th_6">7</th>
-                        <th id="T2_th_7">8</th>
-                        <th id="T2_th_8">9</th>
-                        <th id="T2_th_9">10</th>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>A</td>
-                            <td id="T2_A1"></td>
-                            <td id="T2_A2"></td>
-                            <td id="T2_A3"></td>
-                            <td id="T2_A4"></td>
-                            <td id="T2_A5"></td>
-                            <td id="T2_A6"></td>
-                            <td id="T2_A7"></td>
-                            <td id="T2_A8"></td>
-                            <td id="T2_A9"></td>
-                            <td id="T2_A10"></td>
-                        </tr>
-                        <tr>
-                            <td>B</td>
-                            <td id="T2_B1"></td>
-                            <td id="T2_B2"></td>
-                            <td id="T2_B3"></td>
-                            <td id="T2_B4"></td>
-                            <td id="T2_B5"></td>
-                            <td id="T2_B6"></td>
-                            <td id="T2_B7"></td>
-                            <td id="T2_B8"></td>
-                            <td id="T2_B9"></td>
-                            <td id="T2_B10"></td>
-                        </tr>
-                        <tr>
-                            <td>C</td>
-                            <td id="T2_C1"></td>
-                            <td id="T2_C2"></td>
-                            <td id="T2_C3"></td>
-                            <td id="T2_C4"></td>
-                            <td id="T2_C5"></td>
-                            <td id="T2_C6"></td>
-                            <td id="T2_C7"></td>
-                            <td id="T2_C8"></td>
-                            <td id="T2_C9"></td>
-                            <td id="T2_C10"></td>
-                        </tr>
-                        <tr>
-                            <td>D</td>
-                            <td id="T2_D1"></td>
-                            <td id="T2_D2"></td>
-                            <td id="T2_D3"></td>
-                            <td id="T2_D4"></td>
-                            <td id="T2_D5"></td>
-                            <td id="T2_D6"></td>
-                            <td id="T2_D7"></td>
-                            <td id="T2_D8"></td>
-                            <td id="T2_D9"></td>
-                            <td id="T2_D10"></td>
-                        </tr>
-                        <tr>
-                            <td>E</td>
-                            <td id="T2_E1"></td>
-                            <td id="T2_E2"></td>
-                            <td id="T2_E3"></td>
-                            <td id="T2_E4"></td>
-                            <td id="T2_E5"></td>
-                            <td id="T2_E6"></td>
-                            <td id="T2_E7"></td>
-                            <td id="T2_E8"></td>
-                            <td id="T2_E9"></td>
-                            <td id="T2_E10"></td>
-                        </tr>
-                        <tr>
-                            <td>F</td>
-                            <td id="T2_F1"></td>
-                            <td id="T2_F2"></td>
-                            <td id="T2_F3"></td>
-                            <td id="T2_F4"></td>
-                            <td id="T2_F5"></td>
-                            <td id="T2_F6"></td>
-                            <td id="T2_F7"></td>
-                            <td id="T2_F8"></td>
-                            <td id="T2_F9"></td>
-                            <td id="T2_F10"></td>
-                        </tr>
-                        <tr>
-                            <td>G</td>
-                            <td id="T2_G1"></td>
-                            <td id="T2_G2"></td>
-                            <td id="T2_G3"></td>
-                            <td id="T2_G4"></td>
-                            <td id="T2_G5"></td>
-                            <td id="T2_G6"></td>
-                            <td id="T2_G7"></td>
-                            <td id="T2_G8"></td>
-                            <td id="T2_G9"></td>
-                            <td id="T2_G10"></td>
-                        </tr>
-                        <tr>
-                            <td>H</td>
-                            <td id="T2_H1"></td>
-                            <td id="T2_H2"></td>
-                            <td id="T2_H3"></td>
-                            <td id="T2_H4"></td>
-                            <td id="T2_H5"></td>
-                            <td id="T2_H6"></td>
-                            <td id="T2_H7"></td>
-                            <td id="T2_H8"></td>
-                            <td id="T2_H9"></td>
-                            <td id="T2_H10"></td>
-                        </tr>
-                        <tr>
-                            <td>I</td>
-                            <td id="T2_I1"></td>
-                            <td id="T2_I2"></td>
-                            <td id="T2_I3"></td>
-                            <td id="T2_I4"></td>
-                            <td id="T2_I5"></td>
-                            <td id="T2_I6"></td>
-                            <td id="T2_I7"></td>
-                            <td id="T2_I8"></td>
-                            <td id="T2_I9"></td>
-                            <td id="T2_I10"></td>
-                        </tr>
-                        <tr>
-                            <td>J</td>
-                            <td id="T2_J1"></td>
-                            <td id="T2_J2"></td>
-                            <td id="T2_J3"></td>
-                            <td id="T2_J4"></td>
-                            <td id="T2_J5"></td>
-                            <td id="T2_J6"></td>
-                            <td id="T2_J7"></td>
-                            <td id="T2_J8"></td>
-                            <td id="T2_J9"></td>
-                            <td id="T2_J10"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-        </div>
-
-    </div>
 
 
-    <script src="./js/jquery-3.3.1.min.js"></script>
+    <!--<script src="./js/jquery-3.3.1.min.js"></script>-->
     <script src="./js/game.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
 
 </body>
 
