@@ -27,8 +27,33 @@ function loadData() {
 
       console.log(playerInfo);
       $("#playerInfo").text(playerInfo[0] + "(you) vs " + playerInfo[1]);
+      placePieces(data, playerInfo);
 
-      var ships = data.ships;
+    }).fail(function(jqXHR, textStatus){
+      alert("Failed: Error at " + textStatus);
+    });
+}
+
+//FUNCTION TO ADD SHIPS TO THE GAMEPLAYER REPO
+function addShips(){
+  var setShips = {}
+
+  $.post({
+    url: "/owners/23/pets",
+    data: JSON.stringify({ name: petName, type: petType, age: petAge }),
+    dataType: "text",
+    contentType: "application/json"
+  }).done(function (response, status, jqXHR) {
+      alert( "Ships added: " + response );
+  }).fail(function (jqXHR, textStatus, httpError) {
+      alert("Failed to add ships: " + textStatus + " " + httpError);
+      });
+
+}
+
+//FUNCTION TO PLACE THE SHIPS, SALVOES AND HITS IN THE GRID
+function placePieces(data,playerInfo){
+     var ships = data.ships;
       ships.forEach(function(shipPiece) {
         shipPiece.locations.forEach(function(shipLocation) {
           $("#" + shipLocation).addClass("ship-piece");
@@ -57,7 +82,4 @@ function loadData() {
           });
         }
       });
-    }).fail(function(jqXHR, textStatus){
-      alert("Failed: Error at " + textStatus);
-    });
 }

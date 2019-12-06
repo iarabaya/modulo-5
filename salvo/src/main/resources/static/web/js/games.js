@@ -5,11 +5,11 @@ Vue.component("status-button", {
   props: ["status", "game-players", "action"],
   methods: {
     buttonType: function(status) {
-      var type = "";
+      var type;
       if (status == "Full") {
-        type = "inline btn btn-danger mb-2";
+        type = '"inline btn btn-danger mb-2"" disabled';
       } else if (status == "join game") {
-        type = "inline btn btn-primary mb-2";
+        type = "inline btn btn-primary mb-2" ;
       } else {
         type = "inline btn btn-warning mb-2";
       }
@@ -24,14 +24,14 @@ var app = new Vue({
   data: {
     games: [],
     player: {},
-    leaderboard: []
+    leaderboard: [],
+    username:'',
+    password:''
   },
   methods: {
     logIn: function() {
-      var user = $("#username").val();
-      var pwd = $("#password").val();
 
-      $.post("/api/login", { username: user, password: pwd })
+      $.post("/api/login", { username: this.username, password: this.password })
         .done(function() {
           alert("Logged in successfully!");
           location.reload();
@@ -54,10 +54,8 @@ var app = new Vue({
     },
 
     signUp: function() {
-      var user = $("#username").val();
-      var pwd = $("#password").val();
 
-      $.post("/api/players", { username: user, password: pwd })
+      $.post("/api/players", { username: this.username, password: this.password })
         .done(function() {
           alert("Account created");
         })
@@ -69,8 +67,11 @@ var app = new Vue({
 
     createGame: function() {
       $.post("/api/games")
-        .done(function() {
+        .done(function(response) {
           console.log("Game created successfully");
+          var gpid = response.game.gpid;
+
+          location.replace("game.html?gp=" + gpid);
         })
         .fail(function(jqXHR, textStatus) {
           alert("Failed: " + textStatus);
@@ -89,6 +90,7 @@ var app = new Vue({
       {
         gpid = gamePlayers[0].player.name == this.player.name ? gamePlayers[0].gpid: gamePlayers[1].gpid;
         status = "return to game";
+
       } else {
         status = "Full";
       }
@@ -107,7 +109,6 @@ var app = new Vue({
           var content;
           $.post("/api/game/" + gameId + "/players")
             .done(function(data) {
-              alert("joined game" + data);
               gpid = data.gpid;
               location.replace("game.html?gp=" + gpid);
             })
@@ -122,9 +123,8 @@ var app = new Vue({
           location.replace("game.html?gp=" + gpid);
         };
       } else {
-        action = function() {
-          alert("Full!");
-        };
+        action = function(){console.log('full game')}
+
       }
       return action;
     }
@@ -162,4 +162,11 @@ function changeDateFormat() {
     var newDate = new Date(app.games[i].created).toLocaleString();
     app.games[i].created = newDate;
   }
+}
+
+function handleErrors(response) {
+    if (!response.ok) {
+        throw Error(response.statusText);
+        }
+    return response;
 }
