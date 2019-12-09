@@ -129,7 +129,38 @@ public class SalvoController {
       return new ResponseEntity<>(makeMap("gpid", gp.getId()),HttpStatus.CREATED);
     }
 
-    //
+    //CREATE SHIP LIST (POST)
+  @RequestMapping(path = "/games/players/{gamePlayerId}/ships", method = RequestMethod.POST)
+  public ResponseEntity<Map<String, Object>> createShips(@PathVariable Long gamePlayerId,Authentication authentication){
+
+    if(isGuest(authentication)){
+      return new ResponseEntity<>(makeMap("error","login needed"), HttpStatus.UNAUTHORIZED);
+    }
+
+    Player player = playerRepository.findByUserName(authentication.getName());
+
+    boolean exists = gamePlayerRepository.findById(gamePlayerId).isPresent();
+
+    if(!exists){
+      return new ResponseEntity<>(makeMap("error", "no such gameplayer with given id"), HttpStatus.UNAUTHORIZED);
+    }
+
+    GamePlayer gamePlayer = gamePlayerRepository.findById(gamePlayerId).get();
+
+    if(gamePlayer.getPlayer().getId() != player.getId()){
+      return new ResponseEntity<>(makeMap("error", "you are not a player of this game" ),HttpStatus.UNAUTHORIZED);
+    }
+
+    Ship ships = shipRepository.findById(gamePlayerId).get();
+
+    //hay ships
+    if(ships != null){
+      return new ResponseEntity<>(makeMap("error", "ships already placed"), HttpStatus.FORBIDDEN);
+    }
+
+    shipRepository.save(ships);
+    return new ResponseEntity<>(makeMap("ships", ships.makeShipDTO()), HttpStatus.CREATED);
+  }
 
 
   //TO GET THE GAME VIEW (GET)
