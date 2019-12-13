@@ -1,6 +1,11 @@
+//**************PRINCIPALMENTE LOS GET Y POST DE SHIPS Y SALVOES************
+
 $(function(){
   loadData();
 });
+
+var players;
+var shipsInfo;
 
 function getParameterByName(name) {
   var match = RegExp("[?&]" + name + "=([^&]*)").exec(window.location.search);
@@ -10,24 +15,23 @@ function getParameterByName(name) {
 function loadData() {
   $.get("/api/game_view/" + getParameterByName('gp'))
   .done(function(data){
-      console.log(data);
-      var playerInfo;
+      shipsInfo = data;
 
       if (data.gamePlayers[0].gpid == getParameterByName("gp")) {
-        playerInfo = [
+        players = [
           data.gamePlayers[0].player.name,
           data.gamePlayers[1].player.name
         ];
       } else {
-        playerInfo = [
+        players = [
           data.gamePlayers[1].player.name,
           data.gamePlayers[0].player.name
         ];
       }
 
-      console.log(playerInfo);
-      $("#playerInfo").text(playerInfo[0] + "(you) vs " + playerInfo[1]);
-      placePieces(data, playerInfo);
+      $("#playerInfo").text(players[0] + "(you) vs " + players[1]);
+       //placePieces(data, playerInfo);
+
 
     }).fail(function(jqXHR, textStatus){
       alert("Failed: Error at " + textStatus);
@@ -35,20 +39,35 @@ function loadData() {
 }
 
 //FUNCTION TO ADD SHIPS TO THE GAMEPLAYER REPO
-function addShips(){
-  var setShips = {}
+function placeShips(){
+  var defaultArray =  [{ shipType: "SUBMARINE", locations: ["E1", "F1", "G1"] },
+                   { shipType: "PATROL_BOAT", locations: ["B4", "B5"]},
+                   { shipType: "DESTROYER", locations: ["C2", "C3", "C4"]},
+                   { shipType: "CARRIER", locations: ["A2", "A3", "A4", "A5", "A6"]},
+                   { shipType: "BATTLESHIP", locations: ["F2", "F3", "F4","F5"]}
+                  ]
+
+   gpid = players[0] == shipsInfo.gamePlayers[0].player.name? shipsInfo.gamePlayers[0].gpid : shipsInfo.gamePlayers[1].gpid;
 
   $.post({
-    url: "/owners/23/pets",
-    data: JSON.stringify({ name: petName, type: petType, age: petAge }),
+    url: "/api/games/players/"+ gpid +"/ships",
+    data: JSON.stringify(defaultArray),
     dataType: "text",
     contentType: "application/json"
-  }).done(function (response, status, jqXHR) {
-      alert( "Ships added: " + response );
+  }).done(function (response) {
+      alert( "Ships added!" );
+      console.log(response);
   }).fail(function (jqXHR, textStatus, httpError) {
-      alert("Failed to add ships: " + textStatus + " " + httpError);
+      alert("Failed to add ships: " + textStatus );
       });
 
+
+}
+
+function setShips(){
+ var shipsArray = getLocations();
+ console.log(shipsArray)
+ //return shipsArray
 }
 
 //FUNCTION TO PLACE THE SHIPS, SALVOES AND HITS IN THE GRID

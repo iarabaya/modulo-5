@@ -47,6 +47,7 @@ public class GamePlayer {
         return id;
     }
 
+
     public Player getPlayer() {
         return player;
     }
@@ -76,6 +77,11 @@ public class GamePlayer {
         return salvoes;
     }
 
+    @JsonIgnore
+    public void addShips(Ship ship){
+        this.ships.add(ship);
+        ship.setGamePlayer(this);
+    }
 
     //DTO
 

@@ -341,19 +341,37 @@
         </div>
     </div>-->
 
-    <div class="grid-ships">
+    <div class="row">
+        <div class="col">
+            <div class="grid-ships">
 
-        <div id="grid" class="grid-stack grid-stack-10">
+                <div id="grid" class="grid-stack grid-stack-10">
 
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="grid-salvoes">
+
+                <div id="salvoes" class="grid-stack grid-stack-10">
+
+                </div>
+            </div>
         </div>
     </div>
+
+    <button class="btn btn-primary" onclick="placeShips()">Place Ships</button>
+
+    <button class="btn btn-danger" hidden>Send salvoes</button>
+
+
     <small id="alert-text"></small>
 
 
-    <!--falta implementar Vue js
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
-    <script src="./js/game.js"></script>-->
+
+    <!--GRIDSTACK SCRIPTS-->
     <script src="dist/lodash.min.js"></script>
     <script src="dist/jquery-3.4.1.min.js"></script>
 
@@ -361,7 +379,9 @@
     <script src="dist/gridstack.js"></script>
     <script src="dist/gridstack.jQueryUI.js"></script>
     <script src="dist/jquery.ui.touch-punch.min.js"></script>
+
     <script src="js/main.js"></script>
+    <script src="js/game.js"></script>
 
     <!--BOOTSTRAP SCRIPTS-->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"

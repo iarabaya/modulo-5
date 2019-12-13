@@ -131,7 +131,7 @@ public class SalvoController {
 
     //CREATE SHIP LIST (POST)
   @RequestMapping(path = "/games/players/{gamePlayerId}/ships", method = RequestMethod.POST)
-  public ResponseEntity<Map<String, Object>> createShips(@PathVariable Long gamePlayerId,Authentication authentication){
+  public ResponseEntity<Map<String, Object>> createShips(@PathVariable Long gamePlayerId,Authentication authentication, @RequestBody List <Ship> ships){
 
     if(isGuest(authentication)){
       return new ResponseEntity<>(makeMap("error","login needed"), HttpStatus.UNAUTHORIZED);
@@ -142,7 +142,7 @@ public class SalvoController {
     boolean exists = gamePlayerRepository.findById(gamePlayerId).isPresent();
 
     if(!exists){
-      return new ResponseEntity<>(makeMap("error", "no such gameplayer with given id"), HttpStatus.UNAUTHORIZED);
+      return new ResponseEntity<>(makeMap("error", "no such gameplayer with given id"), HttpStatus.FORBIDDEN);
     }
 
     GamePlayer gamePlayer = gamePlayerRepository.findById(gamePlayerId).get();
@@ -151,15 +151,22 @@ public class SalvoController {
       return new ResponseEntity<>(makeMap("error", "you are not a player of this game" ),HttpStatus.UNAUTHORIZED);
     }
 
-    Ship ships = shipRepository.findById(gamePlayerId).get();
-
     //hay ships
-    if(ships != null){
-      return new ResponseEntity<>(makeMap("error", "ships already placed"), HttpStatus.FORBIDDEN);
+    if(gamePlayer.getShips().size() > 0){
+        return new ResponseEntity<>(makeMap("error", "ships already placed"), HttpStatus.FORBIDDEN);
     }
 
-    shipRepository.save(ships);
-    return new ResponseEntity<>(makeMap("ships", ships.makeShipDTO()), HttpStatus.CREATED);
+    if(ships.isEmpty() || ships.size() != 5){
+        return new ResponseEntity<>(makeMap("error", "you need to place your ships correctly"), HttpStatus.FORBIDDEN);
+    }
+
+      ships.forEach(ship ->{
+          gamePlayer.addShips(new Ship(ship.getShipType(), ship.getLocations(), gamePlayer));
+          shipRepository.save(ship);
+          });
+
+      return new ResponseEntity<>(makeMap("ships", gameViewDTO(gamePlayer)), HttpStatus.CREATED);
+
   }
 
 

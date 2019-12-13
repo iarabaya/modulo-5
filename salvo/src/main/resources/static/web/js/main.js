@@ -1,10 +1,19 @@
 /* Metodos propios de gridstack: 
 all the functionalities are explained in the gridstack github
 https://github.com/gridstack/gridstack.js/tree/develop/doc
+
+**************PRINCIPALMENTE EL GRID DE SHIPS Y SALVOES************
 */
-$(() => loadGrid())
+var shipLocations;
+
+$(() => loadShipGrid())
+
+function getLocations(){
+  return shipLocations;
+}
+
 //Función principal que dispara el frame gridstack.js y carga la matriz con los barcos
-const loadGrid = function () {
+const loadShipGrid = function () {
     var options = {
         //matriz 10 x 10
         width: 10,
@@ -16,7 +25,7 @@ const loadGrid = function () {
         //inhabilita la posibilidad de modificar el tamaño
         disableResize: true,
         //floating widgets
-		float: true,
+		    float: true,
         //removeTimeout: tiempo en milisegundos antes de que el widget sea removido
         //mientras se arrastra fuera de la matriz (default: 2000)
         // removeTimeout:100,
@@ -54,7 +63,7 @@ const loadGrid = function () {
     //createGrid construye la estructura de la matriz
     createGrid(11, $(".grid-ships"), 'ships')
 
-    //Inicializo los listenener para rotar los barcos, el numero del segundo rgumento
+    //Inicializo los listenener para rotar los barcos, el numero del segundo argumento
     //representa la cantidad de celdas que ocupa tal barco
     rotateShips("carrier", 5)
     rotateShips("battleship", 4)
@@ -66,7 +75,6 @@ const loadGrid = function () {
     $('.grid-stack').on('change', () => listenBusyCells('ships'))
     
 }
-
 
 //createGrid construye la estructura de la matriz
 /*
@@ -216,7 +224,7 @@ const rotateShips = function(shipType, cells){
                 $(this).children().removeClass(`${shipType}Vertical`);
             } else{
                 /*en esta ocasion para el update me interesa el ancho y no el alto
-                ya que estoy rotando a horizontal, por estoel tercer argumento no lo
+                ya que estoy rotando a horizontal, por esto el tercer argumento no lo
                 declaro (que es lo mismo que poner null o undefined)*/
                 grid.update($(this), 10 - cells)
                 grid.resize($(this),cells,1);
@@ -244,3 +252,5 @@ const listenBusyCells = function(id){
         }
     }
 }
+
+
