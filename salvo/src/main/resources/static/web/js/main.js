@@ -4,13 +4,9 @@ https://github.com/gridstack/gridstack.js/tree/develop/doc
 
 **************PRINCIPALMENTE EL GRID DE SHIPS Y SALVOES************
 */
-var shipLocations;
 
 $(() => loadShipGrid())
 
-function getLocations(){
-  return shipLocations;
-}
 
 //Función principal que dispara el frame gridstack.js y carga la matriz con los barcos
 const loadShipGrid = function () {
@@ -251,6 +247,43 @@ const listenBusyCells = function(id){
             }
         }
     }
+}
+
+
+//FUNCTION TO GET THE LOCATIONS FROM THE GRID
+function getLocations(){
+
+ var shipLocations = [];
+ var shipTypes= ['carrier','battleship','patrol_boat','submarine','destroyer'];
+
+ shipTypes.forEach(function(item){
+  let x = +($(`#${item}`).attr('data-gs-x'));
+  let y = +($(`#${item}`).attr('data-gs-y'));
+  let height = +($(`#${item}`).attr('data-gs-height'));
+  let width = +($(`#${item}`).attr('data-gs-width'));
+  let locations = [];
+
+  if(height == 1){
+    for (var i = 0; i < width; i++){
+      locations.push(String.fromCharCode(65 + y) + (x + i + 1));
+    }
+  }else if(width == 1){
+    for(var i = 0; i < height; i++){
+       locations.push(String.fromCharCode(65 + y + i) + (x + 1));
+    }
+  }
+
+  shipLocations.push({
+    "shipType": item.toUpperCase(),
+    "x": x + 1,
+    "y": String.fromCharCode(65 + y),
+    "height": height,
+    "width": width,
+    "locations": locations
+    });
+ });
+
+  return shipLocations;
 }
 
 

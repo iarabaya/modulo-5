@@ -51,7 +51,7 @@ function placeShips(){
 
   $.post({
     url: "/api/games/players/"+ gpid +"/ships",
-    data: JSON.stringify(defaultArray),
+    data: JSON.stringify(setShips()),
     dataType: "text",
     contentType: "application/json"
   }).done(function (response) {
@@ -65,9 +65,8 @@ function placeShips(){
 }
 
 function setShips(){
- var shipsArray = getLocations();
- console.log(shipsArray)
- //return shipsArray
+ var shipLocations = getLocations().map(item => ({shipType: item.shipType, locations: item.locations}));
+ return shipLocations;
 }
 
 //FUNCTION TO PLACE THE SHIPS, SALVOES AND HITS IN THE GRID
